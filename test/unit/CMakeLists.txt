@@ -27,6 +27,7 @@ target_include_directories(${PDAL_TEST_SUPPORT_OBJS}
 PDAL_TARGET_COMPILE_SETTINGS(${PDAL_TEST_SUPPORT_OBJS})
 
 PDAL_ADD_TEST(pdal_bounds_test FILES BoundsTest.cpp)
+PDAL_ADD_TEST(pdal_filters_bryce_test FILES  filters/BryceFilterTest.cpp)
 PDAL_ADD_TEST(pdal_config_test FILES ConfigTest.cpp)
 PDAL_ADD_TEST(pdal_eigen_test
     FILES

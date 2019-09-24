@@ -9,7 +9,7 @@ call conda activate %CONDA_ENVIRO%
 echo "conda prefix" %CONDA_PREFIX%
 REM set GENERATOR="Visual Studio 14 2015 Win64"
 set GENERATOR="NMake Makefiles"
-set GENERATOR="Ninja"
+REM set GENERATOR="Ninja"
 
 set ORACLE_HOME=%CONDA_PREFIX%
 cmake -G %GENERATOR% ^
@@ -19,27 +19,26 @@ cmake -G %GENERATOR% ^
       -DLIBLZMA_LIBRARY:FILEPATH=%CONDA_PREFIX%\Library\lib\liblzma.lib ^
       -DZSTD_LIBRARY:FILEPATH=%CONDA_PREFIX%\Library\lib\libzstd.lib ^
 	  -DPython3_ROOT_DIR:FILEPATH="%CONDA_PREFIX%" ^
-  	  -DFBX_ROOT_DIR:FILEPATH="C:\fbx\2019.0" ^
-      -DBUILD_PLUGIN_PYTHON=ON ^
-      -DBUILD_PLUGIN_FBX=ON ^
-      -DBUILD_PLUGIN_PGPOINTCLOUD=ON ^
-      -DBUILD_PLUGIN_I3S=ON ^
-      -DBUILD_PLUGIN_E57=ON ^
-      -DBUILD_PLUGIN_SQLITE=ON ^
-      -DBUILD_PLUGIN_ICEBRIDGE=ON ^
-      -DBUILD_PLUGIN_NITF=ON ^
-      -DBUILD_PLUGIN_TILEDB=ON ^
-      -DWITH_TESTS=ON ^
-      -DWITH_ZLIB=ON ^
-      -DWITH_ZSTD=ON ^
-      -DWITH_LZMA=ON ^
+      -DBUILD_PLUGIN_PYTHON=OFF ^
+      -DBUILD_PLUGIN_FBX=OFF ^
+      -DBUILD_PLUGIN_PGPOINTCLOUD=OFF ^
+      -DBUILD_PLUGIN_I3S=OFF ^
+      -DBUILD_PLUGIN_E57=OFF ^
+      -DBUILD_PLUGIN_SQLITE=OFF ^
+      -DBUILD_PLUGIN_ICEBRIDGE=OFF ^
+      -DBUILD_PLUGIN_NITF=OFF ^
+      -DBUILD_PLUGIN_TILEDB=OFF ^
+      -DWITH_TESTS=OFF ^
+      -DWITH_ZLIB=OFF ^
+      -DWITH_ZSTD=OFF ^
+      -DWITH_LZMA=OFF ^
       -DBUILD_PGPOINTCLOUD_TESTS=OFF ^
       -DBUILD_SQLITE_TESTS=OFF ^
       -DBUILD_OCI_TESTS=OFF ^
       -DCMAKE_VERBOSE_MAKEFILE=OFF ^
-      -DWITH_LAZPERF=ON ^
-      -DWITH_LASZIP=ON ^
+      -DWITH_LAZPERF=OFF ^
+      -DWITH_LASZIP=OFF ^
       .. --debug-trycompile
 
-call ninja
-REM nmake /f Makefile
+REM call ninja
+nmake /f Makefile

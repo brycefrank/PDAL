@@ -176,3 +176,7 @@ test/data/*.json
 test/data/pipeline/*.json
 test/data/filters/*.json
 test/data/plang/*.json
+/out/build/x64-Debug/.cmake/api/v1/query/client-MicrosoftVS/query.json
+/out/build/x64-Debug/VSInheritEnvironments.txt
+/pdal-build/.cmake/api/v1/query/client-MicrosoftVS/query.json
+/pdal-build
