@@ -17,7 +17,7 @@ std::string BryceFilter::getName() const
 
 void BryceFilter::addArgs(ProgramArgs& args)
 {
-    args.add("param", "Some parameter", m_value, 1.0);
+    args.add("foo", "Some parameter named foo", m_value, 1.0);
 }
 
 void BryceFilter::addDimensions(PointLayoutPtr layout)
