@@ -180,54 +180,62 @@ double *GDALGrid::data(const std::string& name)
         return m_stdDev->data();
     return nullptr;
 }
+void GDALGrid::addPoint(double x, double y, double z) {
+	// A simpler add point mechanism that avoids the interpolation step
 
+	int iOrigin = horizontalIndex(x);
+    int jOrigin = horizontalIndex(y);
 
-void GDALGrid::addPoint(double x, double y, double z)
-{
-    // Here's the logic... we divide the cells around the subject cell
-    // (at iOrigin, jOrigin) into four quadrants.  We move outward from the
-    // subject cell, checking distance until we find that we're farther than
-    // permitted by the radius, then we move up (down, over, whatever) a row
-    // or column and do it again until we find a case where there's not a
-    // single cell in the row that meets our criteria.
-    // There are easier ways to figure out which cells will be close enough,
-    // be we need the precise distance for all those cells that we already
-    // know will qualify, so I don't think there's much overhead here that
-    // we can avoid.
-
-    // The four quadrant cases could certainly be merged into one, but I
-    // think it would be harder to follow and there's really not that
-    // much code here.
-
-    // The quadrants are the standard mathematical ones.  Here's a picture
-    // of how things kind of work.  At the end we update the central cell.
-
-    //            ^ ->
-    //          ^ | -->
-    //        ^ | | --->
-    //      ^ | | | ---->
-    //   <------- X ------>
-    //    <------ | | | v
-    //     <----- | | v
-    //       <--- | v
-    //         <- v
-
-    updateFirstQuadrant(x, y, z);
-    updateSecondQuadrant(x, y, z);
-    updateThirdQuadrant(x, y, z);
-    updateFourthQuadrant(x, y, z);
-
-    int iOrigin = horizontalIndex(x);
-    int jOrigin = verticalIndex(y);
-
-    // This is a questionable case.  If a point is in a cell, shouldn't
-    // it just be counted?
-    double d = distance(iOrigin, jOrigin, x, y);
-    if (d < m_radius &&
-        iOrigin >= 0 && jOrigin >= 0 &&
-        iOrigin < (int)m_width && jOrigin < (int)m_height)
-        update(iOrigin, jOrigin, z, d);
+	update(iOrigin, jOrigin, z, 0);
 }
+
+
+//void GDALGrid::addPoint(double x, double y, double z)
+//{
+//    // Here's the logic... we divide the cells around the subject cell
+//    // (at iOrigin, jOrigin) into four quadrants.  We move outward from the
+//    // subject cell, checking distance until we find that we're farther than
+//    // permitted by the radius, then we move up (down, over, whatever) a row
+//    // or column and do it again until we find a case where there's not a
+//    // single cell in the row that meets our criteria.
+//    // There are easier ways to figure out which cells will be close enough,
+//    // be we need the precise distance for all those cells that we already
+//    // know will qualify, so I don't think there's much overhead here that
+//    // we can avoid.
+//
+//    // The four quadrant cases could certainly be merged into one, but I
+//    // think it would be harder to follow and there's really not that
+//    // much code here.
+//
+//    // The quadrants are the standard mathematical ones.  Here's a picture
+//    // of how things kind of work.  At the end we update the central cell.
+//
+//    //            ^ ->
+//    //          ^ | -->
+//    //        ^ | | --->
+//    //      ^ | | | ---->
+//    //   <------- X ------>
+//    //    <------ | | | v
+//    //     <----- | | v
+//    //       <--- | v
+//    //         <- v
+//
+//    updateFirstQuadrant(x, y, z);
+//    updateSecondQuadrant(x, y, z);
+//    updateThirdQuadrant(x, y, z);
+//    updateFourthQuadrant(x, y, z);
+//
+//    int iOrigin = horizontalIndex(x);
+//    int jOrigin = verticalIndex(y);
+//
+//    // This is a questionable case.  If a point is in a cell, shouldn't
+//    // it just be counted?
+//    double d = distance(iOrigin, jOrigin, x, y);
+//    if (d < m_radius &&
+//        iOrigin >= 0 && jOrigin >= 0 &&
+//        iOrigin < (int)m_width && jOrigin < (int)m_height)
+//        update(iOrigin, jOrigin, z, d);
+//}
 
 
 void GDALGrid::updateFirstQuadrant(double x, double y, double z)
